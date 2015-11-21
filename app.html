@@ -1,0 +1,55 @@
+<head>
+  <title>app</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+
+  {{> hello}}
+
+  {{> animals}}
+</body>
+
+<template name="animals">
+  <h1>Rank your favorite animals!</h1>
+  <div>
+    <a href="#" id="add" class="btn btn-primary">Add</a>
+    <div id="animals">
+      {{#each animals}}
+        {{> animal}}
+      {{else}}
+        <h4>
+          You haven't added any favorite animals, click the Add button!
+        </h4>
+      {{/each}}
+    </div>
+  </div>
+</template>
+
+<template name="addactor">
+  <div class="modal fade" id="animalsModal">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title">Actor add / edit</h4>
+        </div>
+
+        <div class="modal-body">
+          <label for="name">Name</label>
+          <input type="text" id="name" />
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="save">Save</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
