@@ -15,45 +15,6 @@ if (Meteor.isClient) {
     }
   });
 
-Template.addactor.events({
-  'click #add': function(e) {
-    e.preventDefault();
-    
-    $('#animalsModal').modal('show');
-  }
-});
-Template.animals.events({
-  'click #add': function(e) {
-    e.preventDefault();
-
-    Modal.show('animalsModal');
-  }
-});
-
-  Template.animalsModalTemplate.events({
-  'click #save': function(e) {
-    e.preventDefault();
-    
-    var animal = {
-      name: $('#name').val()
-    }
-
-    Meteor.call('addAnimal', animal, function(error, result) {
-      if (error) {
-        alert(error);
-      }
-    });
-
-    $('#animalsModal').modal('hide');
-  }
-});
-
-   Template.animals.helpers({
-  animals: function() {
-    return Animals.find({}, { sort: {rank: 1}});
-  }
-});
-
 }
 
 if (Meteor.isServer) {
