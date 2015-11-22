@@ -14,7 +14,7 @@ if (Meteor.isClient) {
       Session.set('counter', Session.get('counter') + 1);
     }
   });
-
+  // Sample commit
 }
 
 if (Meteor.isServer) {
