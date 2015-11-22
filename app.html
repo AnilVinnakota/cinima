@@ -2,14 +2,69 @@
   <title>app</title>
 </head>
 
-<body>
-  <h1>Welcome to Meteor!</h1>
-
-  {{> hello}}
-
+<body data-spy="scroll" data-target=".navbar" data-offset="150">
+  {{> main}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="main">
+	{{> nav}}
+	{{> search}}
+	{{> tag}}
+	{{> tutorial}}
+	{{> about}}
+</template>
+
+<template name="nav">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">MTagger</a>
+    </div>
+    <div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href="#section1">search</a></li>
+          <li><a href="#section2">tag</a></li>
+          <li><a href="#section3">tutorial</a></li>
+          <li><a href="#section4">about</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+      		<li><a href="#about">{{> loginButtons align="right"}} </a></li>
+    	</ul>
+      </div>
+    </div>
+  </div>
+</nav>  
+</template>
+<template name="search">
+<div id="section1" class="container-fluid">
+  <h1>Search your fav actor</h1>
+  <p> search videos of your fav actor</p>
+</div>
+</template>
+
+<template name="tag">
+<div id="section2" class="container-fluid">
+  <h1>Tag</h1>
+  <p>Select a you tube video and tag your fav actor in it</p>
+</div>
+</template>
+
+<template name="tutorial">
+<div id="section3" class="container-fluid">
+  <h1>Tutorial</h1>
+  <p>Examples on how to tag your favourite actor in a video</p>
+</div>
+</template>
+
+<template name="about">
+<div id="section4" class="container-fluid">
+  <h1>About</h1>
+  <p>The idea behind this app</p>
+</div>
 </template>
