@@ -7,9 +7,10 @@
 </body>
 
 <template name="main">
+  {{> actor_add_form}}
 	{{> nav}}
 	{{> search}}
-	{{> tag}}
+	{{> tagger}}
 	{{> tutorial}}
 	{{> about}}
 </template>
@@ -48,8 +49,9 @@
 </div>
 </template>
 
-<template name="tag">
+<template name="tagger">
 <div id="section2" class="container-fluid">
+    <button class="btn btn-success js-form">add actor</button> 
   <h1>Tag</h1>
   <p>Select a you tube video and tag your fav actor in it</p>
 </div>
@@ -68,3 +70,31 @@
   <p>The idea behind this app</p>
 </div>
 </template>
+
+<template name="actor_add_form"> <!-- actor add modal -->
+<div class="modal fade" id="actor_add_form">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"> Add Actor </div>
+      </div>
+      <div class="modal-body">
+        <form class="js-add-image">
+          <div class="form-group">
+            <label for="img_src">Image URL:</label>
+            <input type="text" class="form-control" id="img_src" placeholder="url" name="img_src"/>
+        </div>
+        <div class="form-group">
+         <label for="img_alt">Actor name:</label>
+          <input type="text" class="form-control" id="img_alt" placeholder="actor name" name="img_alt"/>
+        </div>
+          <button class="btn btn-success">save</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" data-dismiss="modal">cancel</button>
+      </div>
+      </div>
+    </div>
+  </div>
+</template> <!-- actor add modal end -->
