@@ -70,7 +70,10 @@
               <p>
                 {{>starsRating mutable=true class="js-rate-image" id=_id}}
               </p -->
+                  {{#if currentUser}}
              <button class="js-del-image btn btn-warning">delete</button>
+                 {{/if}}
+
           </div>
          </div>
         </div> <!-- / col -->
