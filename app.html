@@ -42,18 +42,41 @@
   </div>
 </nav>  
 </template>
-<template name="search">
-<div id="section1" class="container-fluid">
+<template name="tagger">
+<div id="section2" class="container-fluid">
   <h1>Search your fav actor</h1>
   <p> search videos of your fav actor</p>
 </div>
 </template>
 
-<template name="tagger">
-<div id="section2" class="container-fluid">
+<template name="search">
+<div id="section1" class="container-fluid">
+  <h1>Actor</h1>
+  <p>Select your favorite actor </p>
+    {{#if currentUser}}
     <button class="btn btn-success js-form">add actor</button> 
-  <h1>Tag</h1>
-  <p>Select a you tube video and tag your fav actor in it</p>
+    {{/if}}
+      <div class="row">
+      {{#each actors}}
+      <div class="col-xs-12 col-md-2" id="{{_id}}">
+        <div class="thumbnail">
+          <img class="js-image thumbnail-img"  src="{{img_src}}" 
+          alt="{{img_alt}}" />            
+          <div class="caption">           
+              <h3>{{img_alt}}</h3>
+              <!-- p>User: <a href="#" class="js-set-image-filter">{{getUser createdBy}}</a> </p>
+                            <h3>Rating: {{rating}}</h3>
+
+              <p>
+                {{>starsRating mutable=true class="js-rate-image" id=_id}}
+              </p -->
+             <button class="js-del-image btn btn-warning">delete</button>
+          </div>
+         </div>
+        </div> <!-- / col -->
+      {{/each}}
+    </div> <!-- / row -->
+
 </div>
 </template>
 

@@ -2,12 +2,29 @@ Actors = new Mongo.Collection("actors");
 
 if (Meteor.isClient) {
   // counter starts at 0
-  Session.setDefault('counter', 0);
-
-  Template.tagger.events({
+  Session.setDefault('imageLimit', 6);
+  Template.search.helpers({
+    actors:function(){
+      if (Session.get("userFilter")){// they set a filter!
+        return Actors.find({createdBy:Session.get("userFilter")}, {sort:{createdOn: -1, rating:-1}});         
+      }
+      else {
+        return Actors.find({}, {sort:{createdOn: -1, rating:-1}, limit:Session.get("imageLimit")});         
+      }
+    },
+  });
+  Template.search.events({
     'click .js-form': function(event) {
       $("#actor_add_form").modal('show');
-    }, 
+    },
+    'click .js-del-image':function(event){
+       var image_id = this._id;
+       // use jquery to hide the image component
+       // then remove it at the end of the animation
+       $("#"+image_id).hide('slow', function(){
+        Actors.remove({"_id":image_id});
+       })  
+    },
   });
   Template.actor_add_form.events({
     'submit .js-add-image':function(event){
@@ -25,6 +42,8 @@ if (Meteor.isClient) {
           });
         }
         $("#actor_add_form").modal('hide');
+          event.target.img_src.value = '';
+          event.target.img_alt.value = '';
      return false;
     }
   });
@@ -54,19 +73,5 @@ if (Meteor.isServer) {
    Accounts.emailTemplates.verifyEmail.text = function(user, url) {
      return 'Hi,\r\n\r\nThank you for registering with us.\r\nPlease click on the following link to verify your email address: \r\n' + url + '\r\n\r\nRegards,\r\nTeam Cinima.';
    };
-
-    // code to run on server at startup
-            if (Actors.find().count() == 0){
-                for (var i=1;i<23;i++){
-                        Actors.insert(
-                                {
-                                        img_src:"img_"+i+".jpg",
-                                        img_alt:"image number "+i
-                                }
-                        );
-                }// end of for insert images
-                // count the images!
-                console.log("startup.js says: "+Actors.find().count());
-        }// end of if have no images
   });
 }
