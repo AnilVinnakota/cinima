@@ -32,6 +32,8 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
+	// setup admin mail
+	process.env.MAIL_URL = "smtp://admin@timeskii.com:lzjrbjqhqchydffu@smtp.gmail.com:465/";
     // code to run on server at startup
             if (Actors.find().count() == 0){
                 for (var i=1;i<23;i++){
