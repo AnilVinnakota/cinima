@@ -47,12 +47,12 @@ if (Meteor.isServer) {
 
    //-- Subject line of the email.
    Accounts.emailTemplates.verifyEmail.subject = function(user) {
-     return 'Confirm Your Email Address for Cinima';
+     return 'Confirm your email address for Cinima';
    };
 
    //-- Email text
    Accounts.emailTemplates.verifyEmail.text = function(user, url) {
-     return 'Hi,\r\n\r\nThank you for registering with us.\r\nPlease click on the following link to verify your email address: \r\nRegards,\r\nTeam Cinima.' + url;
+     return 'Hi,\r\n\r\nThank you for registering with us.\r\nPlease click on the following link to verify your email address: \r\n' + url + '\r\n\r\nRegards,\r\nTeam Cinima.';
    };
 
     // code to run on server at startup
