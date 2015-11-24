@@ -32,8 +32,29 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
-	// setup admin mail
-	process.env.MAIL_URL = "smtp://admin@timeskii.com:lzjrbjqhqchydffu@smtp.gmail.com:465/";
+    // setup admin mail
+    process.env.MAIL_URL = "smtp://admin@timeskii.com:lzjrbjqhqchydffu@smtp.gmail.com:465/";
+
+    // add verification email to create user
+    Accounts.config({sendVerificationEmail: true, forbidClientAccountCreation: false}); 
+
+   // 2. Format the email
+   //-- Set the from address
+   Accounts.emailTemplates.from = 'Admin ';
+
+   //-- Application name
+   Accounts.emailTemplates.siteName = 'Cinima';
+
+   //-- Subject line of the email.
+   Accounts.emailTemplates.verifyEmail.subject = function(user) {
+     return 'Confirm Your Email Address for Cinima';
+   };
+
+   //-- Email text
+   Accounts.emailTemplates.verifyEmail.text = function(user, url) {
+     return 'Hi,\r\n\r\nThank you for registering with us.\r\nPlease click on the following link to verify your email address: \r\nRegards,\r\nTeam Cinima.' + url;
+   };
+
     // code to run on server at startup
             if (Actors.find().count() == 0){
                 for (var i=1;i<23;i++){
