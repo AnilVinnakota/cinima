@@ -9,9 +9,7 @@ if (Meteor.isClient) {
   Session.setDefault('actor','');
   Template.movies.helpers({
     movies:function(){
-      if (Session.get("actor")) {
-        return Movies.find();
-      }
+      return Movies.find();
     },
     casts:function(){
       if (Session.get("actor")) {
