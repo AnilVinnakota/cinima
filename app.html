@@ -8,9 +8,10 @@
 
 <template name="main">
   {{> actor_add_form}}
+  {{> movie_add_form}}
 	{{> nav}}
-	{{> search}}
-	{{> tagger}}
+	{{> actors}}
+	{{> movies}}
 	{{> tutorial}}
 	{{> about}}
 </template>
@@ -29,9 +30,9 @@
     <div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li><a href="#section1">search</a></li>
-          <li><a href="#section2">tag</a></li>
-          <li><a href="#section3">tutorial</a></li>
+          <li><a href="#section1">Actors</a></li>
+          <li><a href="#section2">Movies</a></li>
+          <li><a href="#section3">Tagging</a></li>
           <li><a href="#section4">about</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -42,17 +43,43 @@
   </div>
 </nav>  
 </template>
-<template name="tagger">
+<template name="movies">
 <div id="section2" class="container-fluid">
-  <h1>Search your fav actor</h1>
-  <p> search videos of your fav actor</p>
+  <h1>Movies </h1>
+      {{#if currentUser}}
+    <button class="btn btn-success js-m-form">add movie</button> 
+    {{/if}}
+              <div class="row">
+
+          {{#each movies}}
+      <div class="col-xs-12 col-md-2" id="{{_id}}">
+        <div class="thumbnail">
+          <img class="js-m-image thumbnail-image"  src="{{thumb}}" 
+          alt="{{movie_name}}" />            
+          <div class="caption">           
+              <h3>{{movie_name}}</h3>
+              <!-- p>User: <a href="#" class="js-set-image-filter">{{getUser createdBy}}</a> </p>
+                            <h3>Rating: {{rating}}</h3>
+
+              <p>
+                {{>starsRating mutable=true class="js-rate-image" id=_id}}
+              </p -->
+                  {{#if currentUser}}
+             <button class="js-del-m btn btn-warning">delete</button>
+                 {{/if}}
+
+          </div>
+         </div>
+        </div> <!-- / col -->
+              {{/each}}
+
+      </div>
 </div>
 </template>
 
-<template name="search">
+<template name="actors">
 <div id="section1" class="container-fluid">
-  <h1>Actor</h1>
-  <p>Select your favorite actor </p>
+  <h1>Actors</h1>
     {{#if currentUser}}
     <button class="btn btn-success js-form">add actor</button> 
     {{/if}}
@@ -113,6 +140,34 @@
         <div class="form-group">
          <label for="img_alt">Actor name:</label>
           <input type="text" class="form-control" id="img_alt" placeholder="actor name" name="img_alt"/>
+        </div>
+          <button class="btn btn-success">save</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" data-dismiss="modal">cancel</button>
+      </div>
+      </div>
+    </div>
+  </div>
+</template> <!-- actor add modal end -->
+
+<template name="movie_add_form"> <!-- movie add modal -->
+<div class="modal fade" id="movie_add_form">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title"> Movie Add </div>
+      </div>
+      <div class="modal-body">
+        <form class="js-add-movie">
+          <div class="form-group">
+            <label for="movie_src">Movie URL:</label>
+            <input type="text" class="form-control" id="movie_src" placeholder="url" name="movie_src"/>
+        </div>
+        <div class="form-group">
+         <label for="img_alt">Movie name:</label>
+          <input type="text" class="form-control" id="movie_name" placeholder="movie name" name="movie_name"/>
         </div>
           <button class="btn btn-success">save</button>
         </form>
