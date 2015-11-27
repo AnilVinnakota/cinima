@@ -1,0 +1,23 @@
+/* CSS declarations go here */
+  body {
+      position: relative;
+  }
+  .navbar {
+      margin-bottom: 100px;
+  }
+  .welcome {
+  	margin-top: 50px;
+  }
+  .thumbnail {
+    height:300px 100%;
+    word-wrap:break-word;
+    background-color: #ffffff;
+  }
+
+  .thumbnail-img{
+    max-height:200px;
+  }
+  #section1 {padding-top:50px;height:100vh;color: #000; background-color: #ffffff;}
+  #section2 {padding-top:50px;height:100vh;color: #000; background-color: #673ab7;}
+  #section3 {padding-top:50px;height:100vh;color: #fff; background-color: #ff9800;}
+  #section4 {padding-top:50px;height:100vh;color: #fff; background-color: #00bcd4;}
