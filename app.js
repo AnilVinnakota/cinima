@@ -7,6 +7,13 @@ if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('imageLimit', 6);
   Session.setDefault('actor','');
+  var options = {
+    keepHistory: 1000 * 60 * 5,
+    localSearch: true
+  };
+  var fields = ['img_alt'];
+  ActorSearch = new SearchSource('actors', fields, options);
+
   Template.movies.helpers({
     movies:function(){
       return Movies.find();
@@ -43,6 +50,18 @@ if (Meteor.isClient) {
   });
 
   Template.actors.helpers({
+      getActors: function() {
+        return ActorSearch.getData({
+          transform: function(matchText, regExp) {
+        return matchText.replace(regExp, "$&")
+      },
+      sort: {img_alt: -1}
+    });
+  },
+  
+  isLoading: function() {
+    return ActorSearch.getStatus().loading;
+  },
     actors:function(){
       if (Session.get("userFilter")){// they set a filter!
         return Actors.find({createdBy:Session.get("userFilter")}, {sort:{createdOn: -1, rating:-1}});         
@@ -53,6 +72,11 @@ if (Meteor.isClient) {
     },
   });
   Template.actors.events({
+    "keyup #search-box": _.throttle(function(e) {
+      var text = $(e.target).val().trim();
+      console.log('searching text:' + text);
+      ActorSearch.search(text);
+      }, 200),
     'click .js-image':function(event){
         //$(event.target).css("width", "50px");
         console.log(this._id);
@@ -121,6 +145,27 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+
+
+  // Search handlers
+  SearchSource.defineSource('actors', function(searchText, options) {
+  var options = {sort: {img_alt: -1}, limit: 6};
+  
+  if(searchText) {
+    var regExp = buildRegExp(searchText);
+    var selector = {$or: [
+      {img_alt: regExp},
+    ]};
+    return Actors.find(selector, options).fetch();
+  } else {
+    return Actors.find({}, options).fetch();
+  }
+  });
+  function buildRegExp(searchText) {
+    // this is a dumb implementation
+    var parts = searchText.trim().split(/[ \-\:]+/);
+    return new RegExp("(" + parts.join('|') + ")", "ig");
+  }
   Meteor.startup(function () {
     // setup admin mail
     process.env.MAIL_URL = "smtp://admin@timeskii.com:lzjrbjqhqchydffu@smtp.gmail.com:465/";

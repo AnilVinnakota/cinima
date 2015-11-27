@@ -83,8 +83,9 @@
     {{#if currentUser}}
     <button class="btn btn-success js-form">add actor</button> 
     {{/if}}
+     <input type="text" id="search-box" placeholder="search actors here" />
       <div class="row">
-      {{#each actors}}
+      {{#each getActors}}
       <div class="col-xs-12 col-md-2" id="{{_id}}">
         <div class="thumbnail">
           <img class="js-image thumbnail-img"  src="{{img_src}}" 
