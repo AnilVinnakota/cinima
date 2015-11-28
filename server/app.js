@@ -1,7 +1,7 @@
 // Search handlers
 SearchSource.defineSource('actors', function(searchText, options) {
   // Search options, return max 6 sorted by create time
-  var options = {sort: {createdOn: -1}, limit: 6};
+  var options = {sort: {createdOn: -1}, limit: 8};
   if(searchText) {
     var regExp = buildRegExp(searchText);
     var selector = {$or: [
@@ -18,7 +18,7 @@ SearchSource.defineSource('actors', function(searchText, options) {
 // Search handlers
 SearchSource.defineSource('movies', function(searchText, options) {
   // Search options, return max 6 sorted by create time
-  var options = {sort: {createdOn: -1}, limit: 6};
+  var options = {sort: {createdOn: -1}, limit: 8};
   if(searchText) {
     var regExp = buildRegExp(searchText);
     var selector = {$or: [

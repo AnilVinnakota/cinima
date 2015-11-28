@@ -1,5 +1,5 @@
 /// Default 6 images
-Session.setDefault('imageLimit', 6);
+Session.setDefault('imageLimit', 8);
 
 /// Start fresh with no actor and movie
 Session.setDefault('actor','');
@@ -190,4 +190,8 @@ Template.movie_add_form.events({
   }
 });
 
-
+Template.body.events({
+  'click .nav a':function(){
+   // $('.navbar-toggle').click(); //bootstrap 3.x by Richard
+  }
+});
