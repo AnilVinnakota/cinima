@@ -19,12 +19,21 @@
 <template name="app">
   <div class="row">
     <div class="class-md-col1"> 
+      <h1> Movie </h1>
       <div class="row">
-      <img class="app-thumbnail"  src="{{mov_img}}"  alt="{{mov}}" />  
-    </div>
+        <img class="app-thumbnail"  src="{{mov_img}}"  alt="{{mov}}" />  
+      </div>
       <div class="row">
-      <button class="btn btn-success js-m-play"> Play {{mov}} </button>
-    </div>
+        <button class="btn btn-success js-m-play" > Play {{mov}} </button>
+      </div>
+      <h1> Actors </h1>
+      <div class="row">
+        <img class="app-thumbnail"  src="{{a_img}}"  alt="{{actor}}" />  
+      </div>
+      <div class="row">
+        <button class="btn btn-success js-a-start" id="a_start"> start </button>
+        <button class="btn btn-success js-a-stop" id="a_stop"> stop </button>
+      </div>
     </div>
   </div>
 </template>

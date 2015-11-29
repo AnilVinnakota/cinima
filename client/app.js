@@ -4,6 +4,8 @@ Session.setDefault('imageLimit', 8);
 /// Start fresh with no actor and movie
 Session.setDefault('actor','');
 Session.setDefault('movie','');
+Session.setDefault('y_id','');
+
 
 // Search options
 var options = {
@@ -52,12 +54,7 @@ Template.movies.events({
   // Select movie
   'click .js-m-image':function(event){
 
-    // Casts.insert({
-    //         actor:Session.get("actor"), 
-    //         movie:Session.get("movie"), 
-    //         createdOn:new Date(),
-    //         createdBy:Meteor.user()._id
-    // });
+
   },
   // Delete movie
   'click .js-del-m':function(event){
@@ -72,10 +69,17 @@ Template.movies.events({
    // Session.set('movie',this._id);
     Session.set('movie',this.movie_name);
     Session.set('y_id',this.y_id);
+    Session.set('movie_id', this._id);
     Session.set('m_img',this.thumb);
-        $('html, body').animate({
+    Session.set('actor','');
+    Session.set('a_img','');
+    Session.set('cid','');
+    player.loadVideoById(Session.get("y_id",5,"large"));
+
+    $('html, body').animate({
         scrollTop: $("#section3").offset().top
     }, 2000);
+
   },
     // Handle key press in search bar
   "keyup #m-search-box": _.throttle(function(e) {
@@ -126,9 +130,6 @@ Template.actors.events({
     }, 200),
   // Actor select
   'click .js-image':function(event){
-    console.log(this._id);
-    Session.set('actor',this._id);
-    Session.set('a_img',this.img_src);
   }, 
   // Actor add
   'click .js-form': function(event) {
@@ -142,6 +143,25 @@ Template.actors.events({
     $("#"+image_id).hide('slow', function(){
       Actors.remove({"_id":image_id});
     })  
+  },
+  'click .js-a-select':function(event){
+    Session.set('actor_id',this._id);
+    Session.set('actor',this.name);
+    Session.set('a_img',this.img_src);
+    $('html, body').animate({
+        scrollTop: $("#section3").offset().top
+    }, 2000);
+    //Session.set('cid', Casts.insert({
+    cid = Casts.insert({
+
+            actor:Session.get("actor_id"), 
+            movie:Session.get("movie_id"), 
+            createdOn:new Date(),
+            createdBy:Meteor.user()._id});
+    Session.set("cid",cid);
+    console.log(Session.get("cid"));
+    $("#a_stop").hide();
+    $("#a_start").show();
   },
 });
 
@@ -213,11 +233,11 @@ onYouTubeIframeAPIReady = function () {
     // Make sure it's a global variable.
     player = new YT.Player("player", {
 
-        height: "400", 
-        width: "600", 
+        height: "500", 
+        width: "725", 
 
         // videoId is the "v" in URL (ex: http://www.youtube.com/watch?v=LdH1hSWGFGU, videoId = "LdH1hSWGFGU")
-        videoId: "LdH1hSWGFGU", 
+        videoId: Session.get("y_id"), 
 
         // Events like ready, state change, 
         events: {
@@ -225,9 +245,8 @@ onYouTubeIframeAPIReady = function () {
             onReady: function (event) {
 
                 // Play video when player ready.
-                event.target.playVideo();
+               // event.target.playVideo();
             }
-
         }
 
     });
@@ -237,16 +256,43 @@ onYouTubeIframeAPIReady = function () {
 YT.load();
 Template.app.helpers({
   mov: function() {
-    console.log("movie");
     return Session.get("movie");
   },
   mov_img: function(){
     return Session.get("m_img");
-  }
+  },
+  actor: function() {
+    return Session.get("actor");
+  },
+  a_img: function(){
+    return Session.get("a_img");
+  },
+  start_time: function() {
+    return Session.get("a_start");
+  },
 });
 Template.app.events({
   'click .js-m-play':function(){
     player.loadVideoById(Session.get("y_id",5,"large"));
-  }
+  },
+  'click .js-a-start':function(){
+    $("#a_start").hide();
+    $("#a_stop").show();
+    Session.set("a_start", player.getCurrentTime())
+    console.log(Session.get("a_start"));
+  },
+  'click .js-a-stop':function(){
+    $("#a_stop").hide();
+    $("#a_start").show();
+    Clips.insert({cid:Session.get("cid"),
+                 start:Session.get("a_start"),
+                 end:player.getCurrentTime()});
+  },
 
 });
+Template.app.rendered = function () {
+ // player.stopVideo();
+  //player.stopVideo();
+      $("#a_stop").hide();
+    $("#a_start").show();
+};

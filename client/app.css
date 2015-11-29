@@ -22,7 +22,7 @@
   .thumbnail-img{
     max-height:200px;
   }
-
+  .js-a-stop, .js-a-start, .js-m-play { text-align: center; margin: 10px;  margin-left: 20px; }
   #section1 {padding-top:50px;min-height:100vh; height:100%;color: #000; background-color: #ffffff;}
   #section2 {padding-top:50px;min-height:100vh; height:100%;color: #000; background-color: #673ab7;}
   #section3 {padding-top:50px;min-height:100vh; height:100%;color: #000; background-color: #ff9800;}
