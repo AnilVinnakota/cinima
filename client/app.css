@@ -13,12 +13,17 @@
     word-wrap:break-word;
     background-color: #ffffff;
   }
-
+  .app-thumbnail {
+    height:200px;
+    width: 300px;
+    word-wrap:break-word;
+    background-color: #ffffff;
+  }
   .thumbnail-img{
     max-height:200px;
   }
 
   #section1 {padding-top:50px;min-height:100vh; height:100%;color: #000; background-color: #ffffff;}
   #section2 {padding-top:50px;min-height:100vh; height:100%;color: #000; background-color: #673ab7;}
-  #section3 {padding-top:50px;min-height:100vh; height:100%;color: #fff; background-color: #ff9800;}
-  #section4 {padding-top:50px;min-height:100vh; height:100%;color: #fff; background-color: #00bcd4;}
+  #section3 {padding-top:50px;min-height:100vh; height:100%;color: #000; background-color: #ff9800;}
+  #section4 {padding-top:50px;min-height:100vh; height:100%;color: #000; background-color: #00bcd4;}

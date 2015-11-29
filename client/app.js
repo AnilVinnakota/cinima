@@ -3,7 +3,7 @@ Session.setDefault('imageLimit', 8);
 
 /// Start fresh with no actor and movie
 Session.setDefault('actor','');
-Session.setDefault('actor','');
+Session.setDefault('movie','');
 
 // Search options
 var options = {
@@ -51,13 +51,13 @@ Template.movies.events({
   },
   // Select movie
   'click .js-m-image':function(event){
-    Session.set('movie',this._id);
-                Casts.insert({
-            actor:Session.get("actor"), 
-            movie:Session.get("movie"), 
-            createdOn:new Date(),
-            createdBy:Meteor.user()._id
-    });
+
+    // Casts.insert({
+    //         actor:Session.get("actor"), 
+    //         movie:Session.get("movie"), 
+    //         createdOn:new Date(),
+    //         createdBy:Meteor.user()._id
+    // });
   },
   // Delete movie
   'click .js-del-m':function(event){
@@ -67,6 +67,15 @@ Template.movies.events({
     $("#"+image_id).hide('slow', function(){
       Movies.remove({"_id":image_id});
     })  
+  },
+  'click .js-m-select':function(event){
+   // Session.set('movie',this._id);
+    Session.set('movie',this.movie_name);
+    Session.set('y_id',this.y_id);
+    Session.set('m_img',this.thumb);
+        $('html, body').animate({
+        scrollTop: $("#section3").offset().top
+    }, 2000);
   },
     // Handle key press in search bar
   "keyup #m-search-box": _.throttle(function(e) {
@@ -79,6 +88,7 @@ Template.movies.events({
 Template.movies.rendered = function() {
    $( "#m-search-box" ).trigger( "keyup" );
 };
+
 // Actor helpers
 Template.actors.helpers({
   // Actors dynamic search
@@ -118,6 +128,7 @@ Template.actors.events({
   'click .js-image':function(event){
     console.log(this._id);
     Session.set('actor',this._id);
+    Session.set('a_img',this.img_src);
   }, 
   // Actor add
   'click .js-form': function(event) {
@@ -194,4 +205,48 @@ Template.body.events({
   'click .nav a':function(){
    // $('.navbar-toggle').click(); //bootstrap 3.x by Richard
   }
+});
+
+onYouTubeIframeAPIReady = function () {
+
+    // New Video Player, the first argument is the id of the div.
+    // Make sure it's a global variable.
+    player = new YT.Player("player", {
+
+        height: "400", 
+        width: "600", 
+
+        // videoId is the "v" in URL (ex: http://www.youtube.com/watch?v=LdH1hSWGFGU, videoId = "LdH1hSWGFGU")
+        videoId: "LdH1hSWGFGU", 
+
+        // Events like ready, state change, 
+        events: {
+
+            onReady: function (event) {
+
+                // Play video when player ready.
+                event.target.playVideo();
+            }
+
+        }
+
+    });
+
+};
+
+YT.load();
+Template.app.helpers({
+  mov: function() {
+    console.log("movie");
+    return Session.get("movie");
+  },
+  mov_img: function(){
+    return Session.get("m_img");
+  }
+});
+Template.app.events({
+  'click .js-m-play':function(){
+    player.loadVideoById(Session.get("y_id",5,"large"));
+  }
+
 });

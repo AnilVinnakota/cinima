@@ -12,8 +12,43 @@
 	{{> nav}}
 	{{> actors}}
 	{{> movies}}
-	{{> tutorial}}
+	{{> tagger}}
 	{{> about}}
+</template>
+
+<template name="app">
+  <div class="row">
+    <div class="class-md-col1"> 
+      <div class="row">
+      <img class="app-thumbnail"  src="{{mov_img}}"  alt="{{mov}}" />  
+    </div>
+      <div class="row">
+      <button class="btn btn-success js-m-play"> Play {{mov}} </button>
+    </div>
+    </div>
+  </div>
+</template>
+
+
+<template name="tagger">
+<div id="section3" class="container-fluid">
+  <h1>Movie Tagger</h1>
+  <p>Tag actors in movie</p>
+  <div class="row">
+    <div class="col-md-3">
+      {{> app}}
+    </div>
+    <div class="col-md-3" id="selections">
+        <div id="player"></div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template name="about">
+<div id="section4" class="container-fluid">
+  <h1>About</h1>
+</div>
 </template>
 
 <template name="nav">
@@ -36,13 +71,14 @@
           <li><a href="#section4">about</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-      		<li><a href="#about">{{> loginButtons align="right"}} </a></li>
-    	</ul>
+          <li><a href="#about">{{> loginButtons align="right"}} </a></li>
+      </ul>
       </div>
     </div>
   </div>
 </nav>  
 </template>
+
 <template name="movies">
 <div id="section2" class="container-fluid">
   <h1>Movies </h1>
@@ -66,6 +102,7 @@
               </p -->
     {{#if currentUser}}
     <button class="js-del-m btn btn-warning">delete</button>
+    <button class="btn btn-success js-m-select">Select movie</button>
     {{/if}}
 
           </div>
@@ -100,6 +137,8 @@
               </p -->
                   {{#if currentUser}}
              <button class="js-del-image btn btn-warning">delete</button>
+             <button class="btn btn-success js-a-select">Select actor</button>
+
                  {{/if}}
 
           </div>
@@ -110,21 +149,6 @@
 
 </div>
 </template>
-
-<template name="tutorial">
-<div id="section3" class="container-fluid">
-  <h1>Tutorial</h1>
-  <p>Examples on how to tag your favourite actor in a video</p>
-</div>
-</template>
-
-<template name="about">
-<div id="section4" class="container-fluid">
-  <h1>About</h1>
-  <p>The idea behind this app</p>
-</div>
-</template>
-
 <template name="actor_add_form"> <!-- actor add modal -->
 <div class="modal fade" id="actor_add_form">
   <div class="modal-dialog">
